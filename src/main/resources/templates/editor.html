@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .editor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .resume-header, .section {
+            margin-bottom: 20px;
+        }
+        .resume-header h1, .section h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .resume-header p, .section p, .section ul {
+            margin-bottom: 10px;
+        }
+        .section ul {
+            padding-left: 20px;
+        }
+        .section ul li {
+            list-style-type: disc;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            background: #333;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="editor-container" id="resumeContent">
+        <div class="resume-header">
+            <h1 contenteditable="true">Your Name</h1>
+            <p contenteditable="true">Gmail | Contact Number | <a href="https://github.com/MdZakatullah" target="_blank">GitHub</a> | <a href="https://linkedin.com/in/md-zakatullah-8860a4214" target="_blank">LinkedIn</a></p>
+        </div>
+        <div class="section">
+            <h2 contenteditable="true">EXPERIENCE</h2>
+            <p contenteditable="true"><strong>Microsoft, Software Development Engineer</strong><br>Jan 2024 – present | Bengaluru</p>
+            <ul contenteditable="true">
+                <li>Actively contributing to a live project, responsible for both frontend and backend development.</li>
+                <li>Developed and maintained scalable web applications using Java and Spring Framework.</li>
+                <li>Designed and implemented RESTful APIs for seamless integration with frontend components.</li>
+                <li>Technologies: Java, Spring Boot, Hibernate, MySQL, HTML, CSS, JavaScript.</li>
+            </ul>
+            <p contenteditable="true"><strong>Wipro, Software Development Engineer Intern</strong><br>Aug 2023 – Sep 2023 | Remote</p>
+            <ul contenteditable="true">
+                <li>Designed, maintained, and built reusable, efficient, and reliable Java code.</li>
+                <li>During my internship, I successfully designed and developed a variety of Java-based applications.</li>
+                <li>Technologies: Java, J2EE, Hibernate, MySQL, HTML, CSS, JavaScript.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2 contenteditable="true">SKILLS</h2>
+            <p contenteditable="true">Languages: Java, JavaScript, SQL</p>
+            <p contenteditable="true">J2EE: JDBC, Servlet, JSP</p>
+            <p contenteditable="true">Frameworks: Spring MVC, Spring Boot, Hibernate</p>
+            <p contenteditable="true">Frontend: HTML, CSS, Bootstrap</p>
+        </div>
+        <div class="section">
+            <h2 contenteditable="true">EDUCATION</h2>
+            <p contenteditable="true"><strong>IIT Bombay</strong>, B.Tech (Electronics & Communication Engineering)<br>2018 – 2022 | Mumbai<br>Grade: 89%</p>
+        </div>
+        <div class="section">
+            <h2 contenteditable="true">PROJECTS</h2>
+            <p contenteditable="true"><strong>Ecommerce Application</strong></p>
+            <ul contenteditable="true">
+                <li>Developed a comprehensive online shopping application that allows users to browse, search, and purchase products seamlessly. Product catalog with categories and search functionality.</li>
+                <li>Technologies: Java, JDBC, Servlet, JSP, MySQL, HTML, CSS, JavaScript, Bootstrap.</li>
+            </ul>
+            <p contenteditable="true"><strong>School Data Management System</strong></p>
+            <ul contenteditable="true">
+                <li>Developed a train ticket reservation system that facilitates booking, cancellation, and management of train tickets.</li>
+                <li>Technologies: Java, JDBC, Servlet, JSP, MySQL, HTML, CSS, JavaScript, Bootstrap.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2 contenteditable="true">CERTIFICATE</h2>
+            <p contenteditable="true">Java Full Stack Development, ABC Bengaluru</p>
+        </div>
+        <button class="btn" onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        // Initialize CKEditor for all contenteditable elements
+        CKEDITOR.inlineAll();
+
+        // Function to download the edited resume as PDF
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Use html2canvas to take a snapshot of the content
+            const resumeContent = document.getElementById('resumeContent');
+            const canvas = await html2canvas(resumeContent, { scale: 2 });
+
+            // Get the image data from the canvas
+            const imgData = canvas.toDataURL('image/png');
+            const imgProps = doc.getImageProperties(imgData);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            // Add the image to the PDF
+            doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            // Save the PDF
+            doc.save('resume.pdf');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: #f4f4f4;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            margin-left: -160px;
+        }
+
+        .nav-right {
+            position: relative; /* Required for dropdown positioning */
+            margin-right: -155px;
+            margin-top: -19px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: #333;
+            position: relative;
+        }
+
+        .btn-secondary {
+            background: #555;
+        }
+
+        .header-content {
+            padding: 100px 0;
+        }
+
+        .header-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .features, .templates, .pricing, .contact, .extra-features {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .features h2, .templates h2, .pricing h2, .contact h2, .extra-features h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .features-list, .templates-gallery, .pricing-plans, .extra-features-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .feature, .template-item, .plan, .extra-feature {
+            flex: 0 0 calc(33.333% - 20px); /* Three items per row with some margin */
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            box-sizing: border-box;
+        }
+
+        .extra-feature img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .extra-feature h3 {
+            color: darkblue; /* Changing text color to blue */
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .features-list, .templates-gallery, .pricing-plans, .extra-features-list {
+                flex-direction: column;
+            }
+
+            .extra-feature {
+                flex: 1 0 100%; /* Full width on small screens */
+                max-width: 100%;
+            }
+        }
+
+        /* Center the Swiper container and maintain full image display */
+        .templates {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Make the section take at least the full viewport height */
+        }
+
+        .swiper-container {
+            width: 100%;
+            max-width: 1000px; /* Limiting the maximum width of the container */
+        }
+
+        .swiper-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .swiper-slide {
+            width: auto !important; /* Allow the slide to adjust width */
+            max-width: 100%; /* Ensure the slide does not exceed its container */
+            height: auto; /* Allow the slide to adjust height */
+            margin: 0 auto; /* Center the slide horizontally */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .swiper-slide img {
+            display: block; /* Ensure the image is treated as a block element */
+            width: 100%; /* Make the image fill the slide container */
+            height: auto; /* Allow the image to adjust height */
+            object-fit: cover; /* Cover the entire slide while maintaining aspect ratio */
+        }
+
+        .swiper-slide:hover {
+            transform: none; /* Disable zoom effect on hover */
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #333;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .nav-right:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-left">
+                    <a href="#" class="logo"></a>
+                    <ul class="nav-links">
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="/log"><i class="fas fa-user-cog"></i> Admin</a></li>
+                        <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+                        <li><a href="#templates"><i class="fas fa-file-alt"></i> Templates</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="#" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <div class="dropdown-content">
+                        <a href="/log"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a href="/pro"><i class="fas fa-user"></i> My Profile</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <section id="templates" class="templates">
+                <div class="container">
+                    <h2>Templates</h2>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://marketplace.canva.com/EAFRuCp3DcY/1/0/1131w/canva-black-white-minimalist-cv-resume-f5JNR-K5jjw.jpg" alt="Template 1">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://www.my-resume-templates.com/wp-content/uploads/2023/12/one-page-resume-template-282.jpg" alt="Template 2">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://cs.unc.edu/wp-content/uploads/sites/1265/2024/03/Technical-Resume-Template-1.png" alt="Template 3">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://www.my-resume-templates.com/wp-content/uploads/2024/01/resume-template-word-229.jpg" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/ce343500-4aff-4dfa-b337-57c78459c6ee/thumbnails/616/modern-nursing-resume-orange-modern-geometric-1-1-1dc2d11a00d6.webp" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://piktochart.com/wp-content/uploads/2023/02/large-10-600x848.jpg" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://cdn-images.resumelab.com/images/rl/common/templates/in/india-resumelab-cv-templates-diamond@3x.png" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwb6KUuNcXi6tcDwlDkYf9WChcKRE0EPOlZ-nu6jwQH9YLG4_dEe0kGaS0XhicTD4gA2o&usqp=CAU" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://www.my-resume-templates.com/wp-content/uploads/2023/05/student-resume-example.jpg" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://www.cvresumebuild.com/wp-content/uploads/2023/05/photo_2023-12-23_21-13-07-600x849.jpg" alt="Template 4">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://marketplace.canva.com/EAFjRZP7Qy4/1/0/1131w/canva-minimalist-modern-professional-cv-resume-xkDELtpQH94.jpg" alt="Template 4">
+                            </div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="header-content">
+                <h1>Create Your Professional Resume in Minutes</h1>
+                <p>Join millions of professionals who use our resume builder to land their dream job.</p>
+                <a href="/edit" class="btn btn-secondary">Get Started</a>
+                <a href="/rt" class="btn btn-secondary">Choose Templates</a>
+            </div>
+        </div>
+    </header>
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="features-list">
+                <div class="feature">
+                    <h3>Easy to Use</h3>
+                    <p>Our resume builder is simple and straightforward.</p>
+                </div>
+                <div class="feature">
+                    <h3>Professional Templates</h3>
+                    <p>Choose from a variety of professionally designed templates.</p>
+                </div>
+                <div class="feature">
+                    <h3>Customizable</h3>
+                    <p>Make your resume stand out with our customization options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="extra-features" class="extra-features">
+        <div class="container">
+            <h2>Features designed to help you win your dream job</h2>
+            <div class="extra-features-list">
+                <div class="extra-feature">
+                    <img src="https://thumbs.dreamstime.com/b/gradient-fire-phoenix-bird-simple-logo-design-black-bird-simple-logo-design-simple-gradient-fire-phoenix-bird-logo-158339374.jpg" alt="Logo">
+                    <h3>Easy online resume builder</h3>
+                    <p>Create an awesome resume in minutes, without leaving your web browser.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://t3.ftcdn.net/jpg/05/02/74/72/360_F_502747255_Txwv0bxPM4o10dLntplOhcjwdiHATmiP.jpg" alt="Logo">
+                    <h3>Automatic spell-checker</h3>
+                    <p>Our built-in spell-checker takes care of the grammar for you. Create a resume with zero typos or errors.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuqbFlAJ1AsREHrNSuirIKsPpUAhFRKjfDG_gwecFFwWkuNzeDRb4KPbAogh7osS_5VIA&usqp=CAU" alt="Logo">
+                    <h3>Your data is safe</h3>
+                    <p>Your data is kept private and protected by strong 256-bit encryption.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVEnmJ4EIAheRNvoGfsS94NOYweVOppONtmg&s" alt="Logo">
+                    <h3>Automatic summary generator</h3>
+                    <p>Create a powerful resume profile or cover letter in one click. Writer’s block is no longer an obstacle. Try for free!</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcIX8Bd9lHlIemw9rP5dG6Qv7Eb8JIurEKsg&s" alt="Logo">
+                    <h3>Approved templates</h3>
+                    <p>Professionally-designed resume templates and examples. Just edit and download in 5 minutes.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZQ-AoIhADoUHdYt_DJQ_YiPitNaSQGdIDYw&s" alt="Logo">
+                    <h3>AI pre-written phrases</h3>
+                    <p>Use the power of AI and data analysis, choose pre-generated effective phrases and keywords.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://www.freeiconspng.com/thumbs/human-icon-png/png-file-png-file-png-file-png-file-png-file-10.png" alt="Logo">
+                    <h3>Optimized resumes</h3>
+                    <p>Formats and designs are optimized for resume-filtering algorithms. Ensure humans see your application!</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv5VAYKZaXlxOGbobSiaZyLi_fbi5l8Z2Eew&s" alt="Logo">
+                    <h3>Multi-format resume options</h3>
+                    <p>Save your perfect resume in any common format, including Microsoft Word and PDF in a single click.</p>
+                </div>
+                <div class="extra-feature">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/966/221/non_2x/cover-letter-icon-style-vector.jpg" alt="Logo">
+                    <h3>Cover letters</h3>
+                    <p>Our cover letter builder works with the same ease and use of elegant templates as the resume creator.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Pricing</h2>
+            <div class="pricing-plans">
+                <div class="plan">
+                    <h3>Basic</h3>
+                    <p>Free</p>
+                    <ul>
+                        <li>Basic templates</li>
+                        <li>Limited customization</li>
+                    </ul>
+                    <a href="/edit" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="plan">
+                    <h3>Pro</h3>
+                    <p>$9.99/month</p>
+                    <ul>
+                        <li>All templates</li>
+                        <li>Full customization</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Message sent!');
+            this.reset();
+        });
+
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'cards',
+            grabCursor: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+</body>
+</html>

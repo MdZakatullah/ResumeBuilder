@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Templates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .templates-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .template-item {
+            width: 30%;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+        .template-item img {
+            width: 100%;
+            height: auto;
+        }
+        .template-item button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            background: #333;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select a Resume Template</h1>
+        <div class="templates-gallery">
+            <div class="template-item" onclick="openEditor('template1')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/ce343500-4aff-4dfa-b337-57c78459c6ee/thumbnails/616/modern-nursing-resume-orange-modern-geometric-2-1-b3fad7d361c3.webp" alt="Template 1">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template2')">
+                <img src="https://mycvdesigner.com/wp-content/uploads/2020/05/editable-visual-resume-template-MCDF0001.jpg" alt="Template 2">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template3')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/a8bd8a14-9ea2-40cf-af65-bf5e5b2944b5/thumbnails/616/ats-classic-hr-resume-white-modern-simple-2-1-a34f4b21e0ee.webp" alt="Template 3">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template4')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/f342c465-dd43-45a1-bd10-28181beba3d3/thumbnails/600/bold-modern-resume-blue-modern-simple-1-1-58d9a65a060e.webp" alt="Template 4">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template5')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/a32a147f-1f69-4fd5-8a39-c25b2a0093e8/thumbnails/616/stylish-teaching-resume-red-modern-simple-2-1-c573eb0e0e0c.webp" alt="Template 5">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template6')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/a60c389b-9052-4d35-bcfe-b7918b8aad5e/thumbnails/600/bold-nursing-resume-yellow-modern-bold-1-1-9b01b6475b18.webp" alt="Template 6">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template7')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/7d43231b-2180-47fa-927e-9b7d536a517b/thumbnails/600/creative-food-service-resume-blue-modern-geometric-1-1-4d5c6e4dd912.webp" alt="Template 7">
+                <a href="/edit">Use This Template</a>
+            </div>
+            <div class="template-item" onclick="openEditor('template8')">
+                <img src="https://cdn.create.microsoft.com/catalog-assets/en-us/087a3a5e-f605-4e54-bea3-7d8ee8176455/thumbnails/600/photo-resume-pink-moder-geometric-1-1-d907ac0b35e4.webp" alt="Template 8">
+                <a href="/edit">Use This Template</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openEditor(template) {
+            window.location.href = `editor.html?template=${template}`;
+        }
+    </script>
+</body>
+</html>
