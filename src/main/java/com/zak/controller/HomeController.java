@@ -47,6 +47,11 @@ public class HomeController {
 		return "forgotPassword";
 	}
 	
+	@GetMapping("/forgotemail")
+	public String forgot_email_form() {
+		return "forgot_email_form";
+	}
+	
 	@GetMapping("/edit")
 	public String editor() {
 		return "editor";
@@ -67,9 +72,19 @@ public class HomeController {
 		return "dashboard";
 	}
 	
-//	@GetMapping("/abt")
-//	public String about() {
-//		return "about";
-//	}
+	@GetMapping("/abt")
+	public String about() {
+		return "about";
+	}
+	
+	@GetMapping("/prodisplay")
+	public String profileDisplay() {
+		return "profileDisplay";
+	}
+	
+	@GetMapping("/care")
+	public String career() {
+		return "career";
+	}
 	
 }

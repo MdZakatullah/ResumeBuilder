@@ -59,7 +59,7 @@
             <textarea name="education" placeholder="Educational Details" required></textarea>
             <textarea name="experience" placeholder="Experience Details" required></textarea>
             <textarea name="certifications" placeholder="Certifications" required></textarea>
-            <button type="submit">Save Profile</button>
+            <button type="submit" id="/prodisplay">Save Profile</button>
         </form>
     </div>
     <script>
@@ -79,8 +79,34 @@
             })
             .then(response => response.json())
             .then(data => {
-                if(data.success) {
-                    alert('Profile saved successfully!');
+                if(data.id) {
+                    window.location.href = '/profile/' + data.id;
+                } else {
+                    alert('An error occurred while saving the profile.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Adding the href functionality to the button
+        document.getElementById('saveProfileButton').addEventListener('click', function(event) {
+            const formData = new FormData(document.getElementById('profileForm'));
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            
+            fetch('/api/profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.id) {
+                    window.location.href = '/profile/' + data.id;
                 } else {
                     alert('An error occurred while saving the profile.');
                 }

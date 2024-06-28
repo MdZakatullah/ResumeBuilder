@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers at Resume Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background: linear-gradient(to bottom right, #f2f2f2, #d9d9d9);
+    }
+    .header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+    }
+    .job-listing {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+    }
+    .job-listing h3 {
+      margin-top: 0;
+    }
+    .footer {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .apply-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .apply-button:hover {
+      background-color: #45a049;
+    }
+    .form-popup {
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 3px solid #f1f1f1;
+      z-index: 9;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    }
+    .form-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container input[type="tel"],
+    .form-container input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px 0;
+      border: none;
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+    .form-container button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .form-container button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    .close-button {
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .close-button:hover {
+      background-color: darkred;
+    }
+    .success-message {
+      display: none;
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Careers at Resume Builder</h1>
+    <p>Join our team and help people create their perfect resume!</p>
+  </div>
+  <div class="content">
+    <h2>Current Openings</h2>
+
+    <div class="job-listing">
+      <h3>Front-End Developer</h3>
+      <p>Location: Remote</p>
+      <p>We are looking for a skilled front-end developer with experience in HTML, CSS, and JavaScript. Familiarity with React is a plus.</p>
+      <button class="apply-button" onclick="openForm('Front-End Developer')">Apply Now</button>
+    </div>
+
+    <div class="job-listing">
+      <h3>Back-End Developer</h3>
+      <p>Location: Remote</p>
+      <p>Seeking a back-end developer with experience in Node.js, Express, and MongoDB. Knowledge of cloud services is preferred.</p>
+      <button class="apply-button" onclick="openForm('Back-End Developer')">Apply Now</button>
+    </div>
+
+    <div class="job-listing">
+      <h3>Product Manager</h3>
+      <p>Location: Remote</p>
+      <p>Looking for a product manager with a strong background in managing software projects and working with cross-functional teams.</p>
+      <button class="apply-button" onclick="openForm('Product Manager')">Apply Now</button>
+    </div>
+
+    <div class="job-listing">
+      <h3>UI/UX Designer</h3>
+      <p>Location: Remote</p>
+      <p>We need a creative UI/UX designer with a keen eye for detail and experience with design tools like Figma and Sketch.</p>
+      <button class="apply-button" onclick="openForm('UI/UX Designer')">Apply Now</button>
+    </div>
+
+    <div class="job-listing">
+      <h3>Customer Support Specialist</h3>
+      <p>Location: Remote</p>
+      <p>We are hiring a customer support specialist to help our users with any issues they may encounter. Excellent communication skills are required.</p>
+      <button class="apply-button" onclick="openForm('Customer Support Specialist')">Apply Now</button>
+    </div>
+  </div>
+
+  <div class="form-popup" id="applyForm">
+    <form class="form-container" id="applicationForm">
+      <h2>Apply for <span id="jobTitle"></span></h2>
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="tel" name="phone" placeholder="Your Phone Number" required>
+      <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+      <button type="submit">Submit Application</button>
+      <button type="button" class="close-button" onclick="closeForm()">Close</button>
+    </form>
+    <div class="success-message" id="successMessage">
+      Successfully submitted your application. We will review and get back to you soon.
+    </div>
+  </div>
+
+  <script>
+    function openForm(jobTitle) {
+      document.getElementById("applyForm").style.display = "block";
+      document.getElementById("jobTitle").innerText = jobTitle;
+    }
+
+    function closeForm() {
+      document.getElementById("applyForm").style.display = "none";
+      document.getElementById("applicationForm").style.display = "block";
+      document.getElementById("successMessage").style.display = "none";
+    }
+
+    document.getElementById("applicationForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("applicationForm").style.display = "none";
+      document.getElementById("successMessage").style.display = "block";
+    });
+  </script>
+</body>
+</html>

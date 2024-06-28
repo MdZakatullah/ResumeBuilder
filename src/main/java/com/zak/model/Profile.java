@@ -21,5 +21,4 @@ public class Profile {
     private String education;
     private String experience;
     private String certifications;
-    
 }
